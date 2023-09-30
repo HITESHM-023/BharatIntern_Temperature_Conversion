@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://imgs.search.brave.com/SEu_oNhp2Cugft8kbE_FBY2WUekvwvku-y_yx-hKhoE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJiYXQuY29t/L2ltZy8zODUzNzIt/cGluay1zdW5yaXNl/LWluLXRoZS1tb3Vu/dGFpbnMtNGstd2Fs/bHBhcGVyLXN1bW1p/dC5qcGc');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+    input {
+        display: block;
+        width: 100%; /* Make all input elements equal in width */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        text-align: center;
+        box-sizing: border-box; /* Include padding and borders in the width */
+    }
+
+
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align-last: center;
+
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Temperature Converter</h1>
+
+ <select id="initialScale">
+    <option value="" disabled selected>Select an option</option>
+    <option value="celsius">Celsius</option>
+    <option value="kelvin">Kelvin</option>
+    <option value="fahrenheit">Fahrenheit</option>
+</select>
+
+       <input type="number" id="inputTemperature" placeholder="Enter Temperature">
+
+ <select id="targetScale">
+    <option value="" disabled selected>Select an option</option>
+    <option value="celsius">Celsius</option>
+    <option value="kelvin">Kelvin</option>
+    <option value="fahrenheit">Fahrenheit</option>
+</select>
+
+        <button onclick="convertTemperature()">Convert</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const initialScale = document.getElementById("initialScale").value;
+            const targetScale = document.getElementById("targetScale").value;
+            const inputTemperature = parseFloat(document.getElementById("inputTemperature").value);
+            let result = "";
+
+            if (initialScale === targetScale) {
+                result = "Same scale selected. No conversion needed.";
+            } else if (initialScale === "celsius") {
+                if (targetScale === "fahrenheit") {
+                    result = `${inputTemperature} °C is ${(inputTemperature * 9/5) + 32} °F`;
+                } else {
+                    result = `${inputTemperature} °C is ${inputTemperature + 273.15} K`;
+                }
+            } else if (initialScale === "kelvin") {
+                if (targetScale === "celsius") {
+                    result = `${inputTemperature} K is ${inputTemperature - 273.15} °C`;
+                } else {
+                    result = `${inputTemperature} K is ${((inputTemperature - 273.15) * 9/5) + 32} °F`;
+                }
+            } else {
+                if (targetScale === "celsius") {
+                    result = `${inputTemperature} °F is ${(inputTemperature - 32) * 5/9} °C`;
+                } else {
+                    result = `${inputTemperature} °F is ${((inputTemperature - 32) * 5/9) + 273.15} K`;
+                }
+            }
+
+            const resultElement = document.getElementById("result");
+            resultElement.innerHTML = `Result: ${result}`;
+        }
+    </script>
+</body>
+</html>
+
